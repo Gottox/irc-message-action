@@ -16,6 +16,7 @@ const inputs = {
 	channel: core.getInput('channel'),
 	channel_key: core.getInput('channel_key'),
 }
+console.log(inputs)
 
 //const inputs = {
 //	server: 'chat.freenode.net',
