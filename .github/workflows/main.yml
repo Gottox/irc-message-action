@@ -2,7 +2,7 @@ on: [push]
 
 jobs:
   irc_push:
-    runs-on: ubuntu-latest
+    # runs-on: ubuntu-latest
     name: IRC notification
     steps:
     - name: push notification
@@ -13,5 +13,3 @@ jobs:
         nickname: gottox-test
         tls: true
         message: "${{ github.actor }} pushed ${{ github.event.compare }}"
-    - name: Get the output time
-      run: echo "Done"
