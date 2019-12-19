@@ -115,6 +115,6 @@ client.on('registered', () => {
 	if (inputs.response_allow_from && inputs.notice === false) {
 		sync(handle_response)
 	} else {
-		sync(finish_client())
+		sync(finish_client)
 	}
 })
