@@ -3,27 +3,24 @@ description: 'Sends a message to an irc channel'
 author: 'Enno Boland'
 inputs:
   server:
-    description: 'IRC server'
+    description: 'The hostname of the IRC server'
     default: 'chat.freenode.net'
     required: true
   port:
-    description: 'IRC server port'
+    description: 'The port number of the IRC server'
     default: 6697
     required: true
-  password:
-    description: 'IRC server password'
-    required: false
   channel:
-    description: 'IRC channel to message'
+    description: 'IRC channel that will receive the messages'
     required: true
   channel_key:
     description: 'IRC channel password'
     required: false
   nickname:
-    description: 'IRC user nickname'
+    description: 'IRC nickname'
     required: true
   sasl_password:
-    description: 'IRC user SASL password'
+    description: 'IRC SASL password'
     required: false
   message:
     description: 'Message to send'
@@ -33,14 +30,14 @@ inputs:
     default: false
     required: false
   tls:
-    description: 'Connect to server using TLS'
+    description: 'Use TLS to connect to the IRC server'
     default: true
     required: false
   response_allow_from:
     description: 'Comma seperated list of authenticated accounts allowed to response to an action'
     required: false
   response_timeout:
-    description: 'Timeout to wait for a response'
+    description: 'Timeout to wait for a response in seconds'
     default: 60
     required: false
 outputs:
