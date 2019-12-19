@@ -1,5 +1,7 @@
 name: 'IRC Message Action'
-description: 'Sends a message to an irc channel'
+description: |
+  This action prints a message to a given IRC Channel. Optionally it waits for a
+  response from a given user
 author: 'Enno Boland'
 inputs:
   server:
