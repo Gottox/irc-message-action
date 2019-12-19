@@ -1,6 +1,6 @@
 name: 'IRC Message Action'
 description: |
-  This action prints messages to an IRC Channel. Optionally waits for responses
+  This action prints messages to an IRC Channel. Optionally waits for responses.
 author: 'Enno Boland'
 inputs:
   server:
