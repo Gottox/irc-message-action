@@ -12,15 +12,12 @@ jobs:
         nickname: gottox-test
         message: "Notice"
         notice: true
-        tls: true
     - name: privmsg (ssl)
       uses: Gottox/irc-message-action@master
       with:
         channel: '##gottox-channel'
         nickname: gottox-test
         message: "Privmsg (ssl)"
-        notice: false
-        tls: true
     - name: privmsg (no ssl)
       uses: Gottox/irc-message-action@master
       with:
@@ -30,3 +27,12 @@ jobs:
         message: "Privmsg (no ssl)"
         notice: false
         tls: false
+    - name: response
+      uses: Gottox/irc-message-action@master
+      with:
+        channel: '##gottox-channel'
+        nickname: gottox-test
+        message: "response"
+        response_allow_from: Gottox
+    - name: outputs
+      run: echo "<${{ steps.response.outputs.response_by }}> ${{ steps.response.outputs.response }}"

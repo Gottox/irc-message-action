@@ -36,6 +36,18 @@ inputs:
     description: 'Connect to server using TLS'
     default: true
     required: false
+  response_allow_from:
+    description: 'Comma seperated list of authenticated accounts allowed to response to an action'
+    required: false
+  response_timeout:
+    description: 'Timeout to wait for a response'
+    default: 60
+    required: false
+outputs:
+  response_from:
+    description: 'nickname of the responding user'
+  response:
+    description: 'Response written from an authenticated user'
 runs:
   using: 'node12'
   main: 'app.js'
