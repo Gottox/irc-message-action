@@ -4,15 +4,19 @@ const github = require('@actions/github');
 
 const client = new IRC.Client();
 
+function toBool(str) {
+	return !!JSON.parse(str);
+}
+
 const inputs = {
 	server: core.getInput('server'),
 	port: core.getInput('port'),
 	password: core.getInput('password'), // TODO
 	nickname: core.getInput('nickname'),
 	sasl_password: core.getInput('sasl_password'),
-	tls: core.getInput('tls'),
+	tls: toBool(core.getInput('tls')),
 	message: core.getInput('message'),
-	notice: core.getInput('notice'),
+	notice: toBool(core.getInput('notice')),
 	channel: core.getInput('channel'),
 	channel_key: core.getInput('channel_key'),
 }
