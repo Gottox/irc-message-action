@@ -57,11 +57,12 @@ nickname of the responding user
 Response written from an authenticated user
 
 ## Example usage
-on: [push]
 
 ### Example 3: Simple IRC notification of pushes
 
 ```yaml
+on: [push]
+
 jobs:
   notification:
     runs-on: ubuntu-latest
@@ -79,6 +80,8 @@ jobs:
 ### Example 2: Acknowledge an action via IRC
 
 ```yaml
+on: [push]
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
