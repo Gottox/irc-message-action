@@ -1,0 +1,44 @@
+name: 'IRC Message Action'
+description: 'Sends a message to an irc channel'
+author: 'Enno Boland'
+inputs:
+  server:
+    description: 'IRC server'
+    default: 'chat.freenode.net'
+    required: true
+  port:
+    description: 'IRC server port'
+    default: 6697
+    required: true
+  password:
+    description: 'IRC server password'
+    required: false
+  channel:
+    description: 'IRC channel to message'
+    required: true
+  channel_key:
+    description: 'IRC channel password'
+    required: false
+  nickname:
+    description: 'IRC user nickname'
+    required: true
+  sasl_password:
+    description: 'IRC user SASL password'
+    required: false
+  message:
+    description: 'Message to send'
+    required: true
+  notice:
+    description: 'Use NOTICE instead of PRIVMSG'
+    default: false
+    required: false
+  tls:
+    description: 'Connect to server using TLS'
+    default: true
+    required: false
+runs:
+  using: 'node12'
+  main: 'app.js'
+branding:
+  icon: 'message-square'
+  color: 'yellow'
