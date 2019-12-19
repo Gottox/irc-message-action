@@ -5,6 +5,14 @@ jobs:
     runs-on: ubuntu-latest
     name: IRC notifications
     steps:
+    - name: test multiline
+      uses: Gottox/irc-message-action@master
+      with:
+        channel: '##gottox-channel'
+        nickname: gottox-test
+        message: |-
+          Hello
+          World
     - name: notice
       uses: Gottox/irc-message-action@master
       with:
