@@ -1,4 +1,5 @@
 const IRC = require('irc-framework')
+const eol = require('eol');
 const core = require('@actions/core');
 const github = require('@actions/github');
 
@@ -11,7 +12,6 @@ function toBool(str) {
 const inputs = {
 	server: core.getInput('server'),
 	port: core.getInput('port'),
-	password: core.getInput('password'), // TODO
 	nickname: core.getInput('nickname'),
 	sasl_password: core.getInput('sasl_password'),
 	tls: toBool(core.getInput('tls')),
@@ -26,7 +26,6 @@ const inputs = {
 //const inputs = {
 //	server: 'chat.freenode.net',
 //	port: '6697',
-//	password: undefined,
 //	nickname: 'gottox-test',
 //	sasl_password: undefined,
 //	tls: true,
@@ -38,6 +37,7 @@ const inputs = {
 //	response_timeout: 10
 //}
 
+
 process.exitCode = 1;
 
 client.connect({
@@ -46,10 +46,6 @@ client.connect({
 	nick: inputs.nickname,
 	password: inputs.sasl_password,
 	tls: inputs.tls,
-});
-
-client.on('debug', (msg) => {
-	console.log(msg);
 });
 
 function sync(cb) {
@@ -105,11 +101,14 @@ function handle_response() {
 }
 
 client.on('registered', () => {
+	const messages = eol.split(inputs.message);
 	if (inputs.notice) {
-		client.notice(inputs.channel, inputs.message);
+		for(let message of messages)
+			client.notice(inputs.channel, message);
 	} else {
 		client.join(inputs.channel, inputs.message);
-		client.say(inputs.channel, inputs.message);
+		for(let message of messages)
+			client.say(inputs.channel, message);
 	}
 
 	if (inputs.response_allow_from && inputs.notice === false) {

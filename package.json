@@ -11,6 +11,7 @@
   "dependencies": {
     "@actions/core": "^1.2.0",
     "@actions/github": "^2.0.0",
+    "eol": "^0.9.1",
     "irc-framework": "^4.6.0"
   }
 }
