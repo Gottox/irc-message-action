@@ -35,4 +35,4 @@ jobs:
         message: "response"
         response_allow_from: Gottox
     - name: outputs
-      run: echo "<${{ steps.response.outputs.response_by }}> ${{ steps.response.outputs.response }}"
+      run: echo "<${{ steps.response.outputs.response_from }}> ${{ steps.response.outputs.response }}"
