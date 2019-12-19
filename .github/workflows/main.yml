@@ -2,7 +2,7 @@ on: [push]
 
 jobs:
   irc_push:
-    # runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
     name: IRC notification
     steps:
     - name: push notification
