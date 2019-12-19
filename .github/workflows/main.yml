@@ -6,7 +6,7 @@ jobs:
     name: IRC notification
     steps:
     - name: push notification
-      uses: Gottox/irc-message-action
+      uses: Gottox/irc-message-action@master
       with:
         channel: '##gottox-test'
         notice: true
