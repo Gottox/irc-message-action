@@ -9,7 +9,7 @@ jobs:
       uses: Gottox/irc-message-action@master
       with:
         channel: '##gottox-test'
-        notice: true
+        notice: false
         nickname: gottox-test
         tls: true
         message: "${{ github.actor }} pushed ${{ github.event.compare }}"
