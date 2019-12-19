@@ -4,28 +4,40 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 
 const client = new IRC.Client();
-client.connect({
-	host: core.getInput('server'),
+
+const inputs = {
+	server: core.getInput('server'),
 	port: core.getInput('port'),
-	// TODO password <- server password
-	nick: core.getInput('nickname'),
-	password: core.getInput('sasl_password'),
+	password: core.getInput('password'), // TODO
+	nickname: core.getInput('nickname'),
+	sasl_password: core.getInput('sasl_password'),
 	tls: core.getInput('tls'),
-});
-const options = {
 	message: core.getInput('message'),
 	notice: core.getInput('notice'),
 	channel: core.getInput('channel'),
-	channel_key: core.getInput('channel_key')
+	channel_key: core.getInput('channel_key'),
 }
 
+client.connect({
+	host: inputs.server,
+	port: inputs.port,
+	nick: inputs.nickname,
+	password: inputs.sasl_password,
+	tls: inputs.tls,
+});
+
+client.on('raw', function(raw) {
+	const pre = raw.from_server ? "<<<" : ">>>";
+	console.log(pre + " " + raw.line);
+})
+
 client.on('registered', function() {
-	let channel = client.channel(options.channel, options.channel_key);
-	if (options.notice) {
-		channel.notice(options.message);
+	let channel = client.channel(inputs.channel, inputs.channel_key);
+	if (inputs.notice) {
+		channel.notice(inputs.message);
 	} else {
 		channel.join();
-		channel.say(options.message);
+		channel.say(inputs.message);
 	}
 	client.quit("Bye!");
 });
