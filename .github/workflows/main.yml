@@ -28,6 +28,7 @@ jobs:
         notice: false
         tls: false
     - name: response
+      id: response
       uses: Gottox/irc-message-action@master
       with:
         channel: '##gottox-channel'
