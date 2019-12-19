@@ -28,7 +28,7 @@ client.connect({
 
 client.on('raw', function(raw) {
 	const pre = raw.from_server ? "<<<" : ">>>";
-	console.log(pre + " " + raw.line);
+	console.log(pre + " " + raw.line.trim());
 })
 
 client.on('registered', function() {
