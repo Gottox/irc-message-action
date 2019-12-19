@@ -96,6 +96,7 @@ jobs:
         message: |-
           ${{ github.actor }} pushed something: ${{ github.event.compare }}
           Please acknowledge with "ok"!
+    # An Acknowledger can reply to this with "mynickname: ok"
     - name: Print Acknowledger
       run: echo "${{ steps.response.outputs.response_from }}"
     - name: Check Acknowledge
