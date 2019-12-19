@@ -8,7 +8,7 @@ jobs:
     - name: push notification
       uses: Gottox/irc-message-action@master
       with:
-        channel: '##gottox-test'
+        channel: '##gottox-channel'
         notice: false
         nickname: gottox-test
         tls: true
