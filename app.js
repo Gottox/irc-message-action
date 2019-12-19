@@ -14,7 +14,7 @@ client.connect({
 });
 const options = {
 	message: core.getInput('message'),
-	notice: core.gettInput('notice'),
+	notice: core.getInput('notice'),
 	channel: core.getInput('channel'),
 	channel_key: core.getInput('channel_key')
 }
