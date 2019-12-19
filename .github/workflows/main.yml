@@ -3,13 +3,29 @@ on: [push]
 jobs:
   irc_push:
     runs-on: ubuntu-latest
-    name: IRC notification
+    name: IRC notifications
     steps:
-    - name: push notification
+    - name: notice
       uses: Gottox/irc-message-action@master
       with:
         channel: '##gottox-channel'
-        notice: false
         nickname: gottox-test
+        message: "Notice"
+        notice: true
         tls: true
-        message: "${{ github.actor }} pushed ${{ github.event.compare }}"
+    - name: privmsg (ssl)
+      uses: Gottox/irc-message-action@master
+      with:
+        channel: '##gottox-channel'
+        nickname: gottox-test
+        message: "Privmsg (ssl)"
+        notice: false
+        tls: true
+    - name: privmsg (no ssl)
+      uses: Gottox/irc-message-action@master
+      with:
+        channel: '##gottox-channel'
+        nickname: gottox-test
+        message: "Privmsg (no ssl)"
+        notice: false
+        tls: false
