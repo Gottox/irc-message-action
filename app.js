@@ -1,5 +1,4 @@
 const IRC = require('irc-framework')
-
 const core = require('@actions/core');
 const github = require('@actions/github');
 
@@ -18,6 +17,21 @@ const inputs = {
 	channel_key: core.getInput('channel_key'),
 }
 
+//const inputs = {
+//	server: 'chat.freenode.net',
+//	port: '6697',
+//	password: undefined,
+//	nickname: 'gottox-test',
+//	sasl_password: undefined,
+//	tls: true,
+//	message: "Hello World",
+//	notice: true,
+//	channel: '##gottox-channel',
+//	channel_key: undefined,
+//}
+
+process.exitCode = 1;
+
 client.connect({
 	host: inputs.server,
 	port: inputs.port,
@@ -26,18 +40,26 @@ client.connect({
 	tls: inputs.tls,
 });
 
-client.on('raw', function(raw) {
-	const pre = raw.from_server ? "<<<" : ">>>";
-	console.log(pre + " " + raw.line.trim());
-})
-
-client.on('registered', function() {
-	let channel = client.channel(inputs.channel, inputs.channel_key);
-	if (inputs.notice) {
-		channel.notice(inputs.message);
-	} else {
-		channel.join();
-		channel.say(inputs.message);
-	}
-	client.quit("Bye!");
+client.on('debug', (msg) => {
+	console.log(msg);
 });
+
+client.on('registered', () => {
+	if (inputs.notice) {
+		client.notice(inputs.channel, inputs.message);
+	} else {
+		client.join(inputs.channel, inputs.message);
+		client.say(inputs.channel, inputs.message);
+		client.part(inputs.channel);
+	}
+
+	client.raw('VERSION');
+	client.on('raw', (raw) => {
+		const msg = raw.line.split(' ');
+		if (msg[1] === '351') {
+			process.exitCode = 0;
+			client.part(inputs.channel);
+			client.quit();
+		}
+	});
+})
