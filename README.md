@@ -58,7 +58,7 @@ Response written from an authenticated user
 
 ## Example usage
 
-### Example 3: Simple IRC notification of pushes
+### Example 1: Simple IRC notification of pushes
 
 ```yaml
 on: [push]
