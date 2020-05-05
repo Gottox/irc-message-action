@@ -48,6 +48,11 @@ Timeout to wait for a response in seconds
 
 default: 60
 
+### `debug`
+Enables verbose output.
+
+default: false
+
 ## Outputs
 
 ### `response_from`

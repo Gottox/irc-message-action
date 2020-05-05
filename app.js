@@ -21,6 +21,7 @@ const inputs = {
 	channel_key: core.getInput('channel_key'),
 	response_allow_from: core.getInput('response_allow_from'),
 	response_timeout: core.getInput('response_timeout'),
+	debug: core.getInput('debug'),
 }
 
 //const inputs = {
@@ -34,7 +35,8 @@ const inputs = {
 //	channel: '##gottox-channel',
 //	channel_key: undefined,
 //	response_allow_from: "Gottox",
-//	response_timeout: 10
+//	response_timeout: 10,
+//	debug: true
 //}
 
 
@@ -98,6 +100,15 @@ function handle_response() {
 			finish_client();
 		})
 	})
+}
+
+if (inputs.debug) {
+	client.on('debug', (ev) => {
+		console.log('#', ev)
+	});
+	client.on('raw', (ev) => {
+		console.log(ev.from_server ? '<' : '>', ev.line.trim());
+	});
 }
 
 client.on('registered', () => {

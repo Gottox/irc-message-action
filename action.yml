@@ -41,6 +41,10 @@ inputs:
     description: 'Timeout to wait for a response in seconds'
     default: 60
     required: false
+  debug:
+    description: 'Enables verbose output.'
+    default: false
+    required: false
 outputs:
   response_from:
     description: 'nickname of the responding user'
