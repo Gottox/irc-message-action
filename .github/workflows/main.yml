@@ -6,7 +6,7 @@ jobs:
     name: IRC notifications
     steps:
     - name: test multiline
-      uses: Gottox/irc-message-action@master
+      uses: Gottox/irc-message-action@main
       with:
         channel: '##gottox-channel'
         nickname: gottox-test
@@ -14,20 +14,20 @@ jobs:
           Hello
           World
     - name: notice
-      uses: Gottox/irc-message-action@master
+      uses: Gottox/irc-message-action@main
       with:
         channel: '##gottox-channel'
         nickname: gottox-test
         message: "Notice"
         notice: true
     - name: privmsg (ssl)
-      uses: Gottox/irc-message-action@master
+      uses: Gottox/irc-message-action@main
       with:
         channel: '##gottox-channel'
         nickname: gottox-test
         message: "Privmsg (ssl)"
     - name: privmsg (no ssl)
-      uses: Gottox/irc-message-action@master
+      uses: Gottox/irc-message-action@main
       with:
         port: 6667
         channel: '##gottox-channel'
@@ -37,7 +37,7 @@ jobs:
         tls: false
     - name: response
       id: response
-      uses: Gottox/irc-message-action@master
+      uses: Gottox/irc-message-action@main
       with:
         channel: '##gottox-channel'
         nickname: gottox-test
