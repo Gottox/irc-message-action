@@ -7,7 +7,7 @@ response from a given user
 
 ### `server`
 The hostname of the IRC server
-    default: 'chat.freenode.net'
+    default: 'irc.libera.chat'
     required: true
 
 ### `port`
