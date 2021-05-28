@@ -74,7 +74,7 @@ jobs:
     name: Notifications
     steps:
     - name: IRC notification
-      uses: Gottox/irc-message-action@v1
+      uses: Gottox/irc-message-action@v2
       with:
         channel: '##mychannel'
         nickname: mynickname
@@ -94,7 +94,7 @@ jobs:
     steps:
     - name: Acknowledge
       id: acknowledge
-      uses: Gottox/irc-message-action@v1
+      uses: Gottox/irc-message-action@v2
       with:
         channel: '##mychannel'
         nickname: mynickname
