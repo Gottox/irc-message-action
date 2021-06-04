@@ -45,7 +45,7 @@ const inputs = {
 process.exitCode = 1;
 
 const excess_flood_func = (() => {
-	switch (excess_flood_func) {
+	switch (inputs.excess_flood) {
 		case "throttle":
 			return throttled;
 		case "truncate":
