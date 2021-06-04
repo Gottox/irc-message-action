@@ -7,13 +7,13 @@ response from a given user
 
 ### `server`
 The hostname of the IRC server
-    default: 'irc.libera.chat'
-    required: true
+
+	default: 'irc.libera.chat'
 
 ### `port`
 The port number of the IRC server
-    default: 6697
-    required: true
+
+	default: 6697
 
 ### `channel`
 **Required** IRC channel that will receive the messages
@@ -33,12 +33,12 @@ IRC SASL password
 ### `notice`
 Use NOTICE instead of PRIVMSG
 
-default: false
+	default: false
 
 ### `tls`
 Use TLS to connect to the IRC server
 
-default: true
+	default: true
 
 ### `response_allow_from`
 Comma seperated list of authenticated accounts allowed to response to an action
@@ -46,14 +46,14 @@ Comma seperated list of authenticated accounts allowed to response to an action
 ### `response_timeout`
 Timeout to wait for a response in seconds
 
-default: 60
+	default: 60
 
 ### `excess_flood`
 Prevention strategy for excess flooding a channel Either "throttle" or "truncate".
 * `truncate`: cuts off the message after 3 lines.
 * `throttle`: sends only 1 line per second.
 
-default: "truncate"
+	default: "throttle"
 
 
 ### `debug`

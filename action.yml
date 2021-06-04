@@ -6,11 +6,9 @@ inputs:
   server:
     description: 'The hostname of the IRC server'
     default: 'irc.libera.chat'
-    required: true
   port:
     description: 'The port number of the IRC server'
     default: 6697
-    required: true
   channel:
     description: 'IRC channel that will receive the messages'
     required: true
@@ -46,7 +44,7 @@ inputs:
       Prevention strategy for excess flooding a channel Either "throttle" or "truncate".
       * `truncate`: cuts off the message after 3 lines.
       * `throttle`: sends only 1 line per second.
-    default: "truncate"
+    default: "throttle"
     required: false
   debug:
     description: 'Enables verbose output.'
