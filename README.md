@@ -48,6 +48,14 @@ Timeout to wait for a response in seconds
 
 default: 60
 
+### `excess_flood`
+Prevention strategy for excess flooding a channel Either "throttle" or "truncate".
+* `truncate`: cuts of the message after 3 lines.
+* `throttle`: sends only 1 line per second.
+
+default: "truncate"
+
+
 ### `debug`
 Enables verbose output.
 

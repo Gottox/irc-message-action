@@ -4,6 +4,8 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 
 const client = new IRC.Client();
+const throttled_interval = 1000;
+const truncated_max_lines = 3;
 
 function toBool(str) {
 	return !!JSON.parse(str);
@@ -22,6 +24,7 @@ const inputs = {
 	response_allow_from: core.getInput('response_allow_from'),
 	response_timeout: core.getInput('response_timeout'),
 	debug: core.getInput('debug'),
+	excess_flood: core.getInput('excess_flood'),
 }
 
 //const inputs = {
@@ -39,8 +42,19 @@ const inputs = {
 //	debug: true
 //}
 
-
 process.exitCode = 1;
+
+const excess_flood_func = (() => {
+	switch (excess_flood_func) {
+		case "throttle":
+			return throttled;
+		case "truncate":
+			return truncated;
+		default:
+			console.error(`excess_flood must either be "truncate" or "throttle"`);
+			return process.exit();
+	}
+})
 
 client.connect({
 	host: inputs.server,
@@ -49,6 +63,35 @@ client.connect({
 	password: inputs.sasl_password,
 	tls: inputs.tls,
 });
+
+function throttled(array, cb) {
+	return new Promise(resolve => {
+		let interval = 0;
+		let i = 0;
+		interval = setInterval(() => {
+			cb(array[i]);
+			i++;
+			if (i >= array.length) {
+				clearInterval(interval);
+				resolve();
+			}
+		}, throttled_interval);
+	});
+}
+
+function truncated(array, cb) {
+	return new Promise(resolve => {
+		let i = 0;
+		for (i = 0; i < array.length && i < truncated_max_lines; i++) {
+			if (i + 1 == truncated_max_lines && i + 1 != array.length) {
+				cb(array[i] + " [...]");
+			} else {
+				cb(array[i]);
+			}
+		}
+		resolve();
+	});
+}
 
 function sync(cb) {
 	client.raw('VERSION');
@@ -113,18 +156,23 @@ if (inputs.debug) {
 
 client.on('registered', () => {
 	const messages = eol.split(inputs.message);
+	let promise = null;
 	if (inputs.notice) {
-		for(let message of messages)
+		promise = excess_flood_func(messages, (message) => {
 			client.notice(inputs.channel, message);
+		});
 	} else {
 		client.join(inputs.channel, inputs.message);
-		for(let message of messages)
+		promise = excess_flood_func(messages, (message) => {
 			client.say(inputs.channel, message);
+		});
 	}
 
-	if (inputs.response_allow_from && inputs.notice === false) {
-		sync(handle_response)
-	} else {
-		sync(finish_client)
-	}
+	promise.then(() => {
+		if (inputs.response_allow_from && inputs.notice === false) {
+			sync(handle_response)
+		} else {
+			sync(finish_client)
+		}
+	})
 })

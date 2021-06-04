@@ -9,7 +9,7 @@ jobs:
       uses: Gottox/irc-message-action@main
       with:
         channel: '##gottox-channel'
-        nickname: gottox-test
+        nickname: gottox-multiline
         message: |-
           Hello
           World
@@ -17,21 +17,21 @@ jobs:
       uses: Gottox/irc-message-action@main
       with:
         channel: '##gottox-channel'
-        nickname: gottox-test
+        nickname: gottox-notice
         message: "Notice"
         notice: true
     - name: privmsg (ssl)
       uses: Gottox/irc-message-action@main
       with:
-        channel: '##gottox-channel'
-        nickname: gottox-test
+        channel: 'Gottox'
+        nickname: gottox-privmsg
         message: "Privmsg (ssl)"
     - name: privmsg (no ssl)
       uses: Gottox/irc-message-action@main
       with:
         port: 6667
         channel: '##gottox-channel'
-        nickname: gottox-test
+        nickname: gottox-privmsg2
         message: "Privmsg (no ssl)"
         notice: false
         tls: false
@@ -40,8 +40,62 @@ jobs:
       uses: Gottox/irc-message-action@main
       with:
         channel: '##gottox-channel'
-        nickname: gottox-test
+        nickname: gottox-response
         message: "response"
         response_allow_from: Gottox
     - name: outputs
       run: echo "<${{ steps.response.outputs.response_from }}> ${{ steps.response.outputs.response }}"
+    - name: excess flood truncate
+      uses: Gottox/irc-message-action@main
+      with:
+        channel: '##gottox-channel'
+        nickname: gottox-excess-tr
+        excess_flood: truncate
+        message: |-
+          1
+          2
+          3
+          4
+          5
+          6
+          7
+          8
+          9
+          10
+          11
+          12
+          13
+          14
+          15
+          16
+          17
+          18
+          19
+          20
+    - name: excess flood throttled
+      uses: Gottox/irc-message-action@main
+      with:
+        channel: '##gottox-channel'
+        nickname: gottox-excess-th
+        excess_flood: throttle
+        message: |-
+          1
+          2
+          3
+          4
+          5
+          6
+          7
+          8
+          9
+          10
+          11
+          12
+          13
+          14
+          15
+          16
+          17
+          18
+          19
+          20
