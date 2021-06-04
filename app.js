@@ -28,18 +28,19 @@ const inputs = {
 }
 
 //const inputs = {
-//	server: 'chat.freenode.net',
+//	server: 'irc.libera.chat',
 //	port: '6697',
 //	nickname: 'gottox-test',
 //	sasl_password: undefined,
 //	tls: true,
-//	message: "Hello World",
+//	message: "a\n".repeat(20),
 //	notice: false,
 //	channel: '##gottox-channel',
 //	channel_key: undefined,
-//	response_allow_from: "Gottox",
+//	response_allow_from: "",
 //	response_timeout: 10,
-//	debug: true
+//	debug: true,
+//	excess_flood: "throttle"
 //}
 
 process.exitCode = 1;
@@ -54,7 +55,7 @@ const excess_flood_func = (() => {
 			console.error(`excess_flood must either be "truncate" or "throttle"`);
 			return process.exit();
 	}
-})
+})();
 
 client.connect({
 	host: inputs.server,
@@ -66,16 +67,18 @@ client.connect({
 
 function throttled(array, cb) {
 	return new Promise(resolve => {
-		let interval = 0;
+		let timeout = 0;
 		let i = 0;
-		interval = setInterval(() => {
+		const f = () => {
 			cb(array[i]);
 			i++;
 			if (i >= array.length) {
-				clearInterval(interval);
 				resolve();
+			} else {
+				setTimeout(f, i < truncated_max_lines ? 0 : throttled_interval);
 			}
-		}, throttled_interval);
+		}
+		f();
 	});
 }
 
@@ -157,17 +160,17 @@ if (inputs.debug) {
 client.on('registered', () => {
 	const messages = eol.split(inputs.message);
 	let promise = null;
+
 	if (inputs.notice) {
 		promise = excess_flood_func(messages, (message) => {
 			client.notice(inputs.channel, message);
 		});
 	} else {
-		client.join(inputs.channel, inputs.message);
+		client.join(inputs.channel);
 		promise = excess_flood_func(messages, (message) => {
 			client.say(inputs.channel, message);
 		});
 	}
-
 	promise.then(() => {
 		if (inputs.response_allow_from && inputs.notice === false) {
 			sync(handle_response)
