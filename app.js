@@ -132,11 +132,11 @@ function handle_response() {
 		if (!msg.message.startsWith(prefix)) {
 			return;
 		}
-		console.log(`Mention from ${msg.nick}. Check for his account`)
+		console.log(`Mention from ${msg.nick}. Check authentication of the account`)
 
 		client.whois(msg.nick, (nick) => {
 			if (!allow_from.includes(nick.account)) {
-				return console.log(`${msg.nick}: Account ${nick.account} is not in response_allow_from`)
+				return console.log(`${msg.nick}: account ${nick.account} is not in response_allow_from`)
 			}
 
 			core.setOutput("response", msg.message.substr(prefix.length));
