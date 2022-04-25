@@ -1,7 +1,9 @@
 var global = require('../internals/global');
+var bind = require('../internals/function-bind-context');
 var getOwnPropertyDescriptor = require('../internals/object-get-own-property-descriptor').f;
 var macrotask = require('../internals/task').set;
 var IS_IOS = require('../internals/engine-is-ios');
+var IS_IOS_PEBBLE = require('../internals/engine-is-ios-pebble');
 var IS_WEBOS_WEBKIT = require('../internals/engine-is-webos-webkit');
 var IS_NODE = require('../internals/engine-is-node');
 
@@ -44,12 +46,14 @@ if (!queueMicrotask) {
       node.data = toggle = !toggle;
     };
   // environments with maybe non-completely correct, but existent Promise
-  } else if (Promise && Promise.resolve) {
+  } else if (!IS_IOS_PEBBLE && Promise && Promise.resolve) {
     // Promise.resolve without an argument throws an error in LG WebOS 2
     promise = Promise.resolve(undefined);
-    then = promise.then;
+    // workaround of WebKit ~ iOS Safari 10.1 bug
+    promise.constructor = Promise;
+    then = bind(promise.then, promise);
     notify = function () {
-      then.call(promise, flush);
+      then(flush);
     };
   // Node.js without promises
   } else if (IS_NODE) {
@@ -59,13 +63,14 @@ if (!queueMicrotask) {
   // for other environments - macrotask based on:
   // - setImmediate
   // - MessageChannel
-  // - window.postMessag
+  // - window.postMessage
   // - onreadystatechange
   // - setTimeout
   } else {
+    // strange IE + webpack dev server bug - use .bind(global)
+    macrotask = bind(macrotask, global);
     notify = function () {
-      // strange IE + webpack dev server bug - use .call(global)
-      macrotask.call(global, flush);
+      macrotask(flush);
     };
   }
 }

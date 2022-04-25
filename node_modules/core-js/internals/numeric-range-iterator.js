@@ -1,8 +1,9 @@
 'use strict';
+var global = require('../internals/global');
 var InternalStateModule = require('../internals/internal-state');
 var createIteratorConstructor = require('../internals/create-iterator-constructor');
 var isObject = require('../internals/is-object');
-var defineProperties = require('../internals/object-define-properties');
+var defineProperties = require('../internals/object-define-properties').f;
 var DESCRIPTORS = require('../internals/descriptors');
 
 var INCORRECT_RANGE = 'Incorrect Number.range arguments';
@@ -10,6 +11,9 @@ var NUMERIC_RANGE_ITERATOR = 'NumericRangeIterator';
 
 var setInternalState = InternalStateModule.set;
 var getInternalState = InternalStateModule.getterFor(NUMERIC_RANGE_ITERATOR);
+
+var RangeError = global.RangeError;
+var TypeError = global.TypeError;
 
 var $RangeIterator = createIteratorConstructor(function NumericRangeIterator(start, end, option, type, zero, one) {
   if (typeof start != type || (end !== Infinity && end !== -Infinity && typeof end != type)) {
