@@ -99,8 +99,15 @@ function truncated(array, cb) {
 function sync(cb) {
 	client.raw('VERSION');
 	client.on('raw', (raw) => {
+		let i = 1;
 		const msg = raw.line.split(' ');
-		if (msg[1] === '351') {
+
+		// if the line has message-tags, the command index will be offset by 1
+		if (msg[0][0] == '@') {
+			i++;
+		}
+
+		if (msg[i] === '351') {
 			return cb();
 		}
 	});
