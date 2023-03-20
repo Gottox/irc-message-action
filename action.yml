@@ -56,7 +56,7 @@ outputs:
   response:
     description: 'Response written from an authenticated user'
 runs:
-  using: 'node12'
+  using: 'node16'
   main: 'app.js'
 branding:
   icon: 'hash'
