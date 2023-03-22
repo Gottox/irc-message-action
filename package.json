@@ -12,6 +12,7 @@
     "@actions/core": "^1.10.0",
     "@actions/github": "^5.1.1",
     "eol": "^0.9.1",
-    "irc-framework": "^4.13.1"
+    "irc-framework": "^4.13.1",
+    "uuid": "^9.0.0"
   }
 }
